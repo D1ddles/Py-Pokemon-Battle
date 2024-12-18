@@ -48,12 +48,14 @@ class Pokemon:
         """
         mult = 1
         for type in [self.type1, self.type2]:
+            if not type:
+                break
 
-            if type in move_type.strong:
+            elif type.name in move_type.strong:
                 mult *= 2
-            elif type in move_type.weak:
+            elif type.name in move_type.weak:
                 mult *= 0.5
-            elif type in move_type.not_affect:
+            elif type.name in move_type.not_affect:
                 mult *= 0
 
         return mult
