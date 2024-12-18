@@ -22,15 +22,6 @@ class Poke_type:
         self.weak = relationships["weak"]
         self.not_affect = relationships["not_affect"]
 
-        # possibly unnecessary
-        # # Set the reverse relationships for others
-        # for strong_type in self.strong:
-        #     strong_type.weak.append(self)
-        # for weak_type in self.weak:
-        #     weak_type.strong.append(self)
-        # for not_affected_type in self.not_affect:
-        #     not_affected_type.not_affect.append(self)
-
     def __str__(self):
         return self.name
 

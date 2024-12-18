@@ -4,17 +4,17 @@ from models import Pokemon, Poke_type
 @pytest.fixture
 def type_objects():
     # define types
-    grass = Poke_type("grass")
-    fire = Poke_type("fire")
-    water = Poke_type("water")
-    ghost = Poke_type("ghost")
+    grass = Poke_type("Grass")
+    fire = Poke_type("Fire")
+    water = Poke_type("Water")
+    ghost = Poke_type("Ghost")
 
     # set relationships
     grass.set_relationships()
     fire.set_relationships()
     water.set_relationships()
     ghost.set_relationships()
-    
+
     return {
         "grass": grass,
         "fire": fire,
@@ -37,9 +37,11 @@ def test_dmg_multiplier(type_objects, poke_objects):
     Tests that when calculating the damage multiplier of a move on a pokemon based on types, the correct multiplier is given
     """
     attack_type = type_objects["fire"]
+    print(attack_type.strong)
     attacked = poke_objects["bulbasaur"]
+    print(attacked.type1)
 
-    assert attack_type.strong == [type_objects["grass"]]
-    assert attacked.type1 == [type_objects["grass"]]
+    assert 'Grass' in [atk_type for atk_type in attack_type.strong]
+    assert attacked.type1 == type_objects["grass"]
 
     assert attacked.attack_effectiveness(attack_type) == 2
