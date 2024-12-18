@@ -2,7 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import List
 
-from models_helper import get_type_relationships
+from models.models_helper import get_type_relationships
 
 @dataclass
 class Poke_type:
@@ -13,10 +13,11 @@ class Poke_type:
     not_affect: List[Poke_type] = field(default_factory=list) # list of types that self cannot affect
 
     def __post_init__(self):
-        # Automatically set relationships using helper
+        # Automatically set relationships just after initialising
         self.set_relationships()
 
     def set_relationships(self):
+        # Defines relationships between types as specified in helper
         relationships = get_type_relationships(self.name)
         self.strong = relationships["strong"]
         self.weak = relationships["weak"]
@@ -41,10 +42,11 @@ class Pokemon:
     
     def __str__(self):
         return self.name
+    
 
     def attack_effectiveness(self, move_type: Poke_type):
         """
-        Returns damage multiplier based on the type of the move and types of the defending pokemon
+        Returns damage multiplier based on the type of the attack and the types of the defending pokemon
         """
         mult = 1
         for type in [self.type1, self.type2]:

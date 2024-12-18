@@ -91,3 +91,6 @@ def get_type_relationships(type_name: str) -> dict:
             "not_affect": []
         }
     }.get(type_name, {"strong": [], "weak": [], "not_affect": []})
+
+def write_pickle():
+    pass

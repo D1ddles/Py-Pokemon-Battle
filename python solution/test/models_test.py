@@ -1,5 +1,5 @@
 import pytest
-from models import Pokemon, Poke_type
+from models.models import Pokemon, Poke_type
 
 @pytest.fixture
 def type_objects():
