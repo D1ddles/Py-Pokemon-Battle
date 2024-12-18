@@ -3,12 +3,12 @@ import pickle
 from models.models import Poke_type, Pokemon
 
 def get_pokemon():
-    with open("models/pokemon.pkl", 'rb') as file:
+    with open(r"python solution\models\pokemon.pkl", 'rb') as file:
         data = pickle.load(file)
 
         pokemon_dict = {}
         for pokemon in data:
-            pokemon_dict[pokemon.name] = pokemon
+            pokemon_dict[pokemon["Name"]] = pokemon
 
         return pokemon_dict
 
