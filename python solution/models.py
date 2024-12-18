@@ -8,9 +8,9 @@ from models_helper import get_type_relationships
 class Poke_type:
 
     name: str
-    strong: List[Poke_type] = field(default_factory=list) # all types where self is strong against
-    weak: List[Poke_type] = field(default_factory=list) # all types where self is weak against
-    not_affect: List[Poke_type] = field(default_factory=list) # all types that self cannot affect
+    strong: List[Poke_type] = field(default_factory=list) # list of types where self is strong against
+    weak: List[Poke_type] = field(default_factory=list) # list of types where self is weak against
+    not_affect: List[Poke_type] = field(default_factory=list) # list of types that self cannot affect
 
     def __post_init__(self):
         # Automatically set relationships using helper
