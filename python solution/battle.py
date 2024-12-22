@@ -1,9 +1,18 @@
 import pickle
+from pathlib import Path
 
 from models.models import Poke_type, Pokemon
+from models.models_helper import write_pickle
 
-def get_pokemon():
-    with open(r"python solution\models\pokemon.pkl", 'rb') as file:
+def get_pokemon() -> dict:
+
+    file_path = Path("models/pokemon.pkl")
+
+    if not file_path.exists():
+        write_pickle()
+        file_path = Path("models/pokemon.pkl")
+
+    with file_path.open('rb') as file:
         data = pickle.load(file)
 
         pokemon_dict = {}
@@ -12,13 +21,26 @@ def get_pokemon():
 
         return pokemon_dict
 
-def pokemon_select(pokemon_dict):
-    print("Select a pokemon: ")
-    selection = input()
-    if selection:
-        pokemon = pokemon_dict[selection]
+def pokemon_select(pokemon_dict: dict) -> dict:
+    pokemon = None
 
-        print(f"You selected: {pokemon}!")
+    while not pokemon:
+        print("Select a pokemon: ")
+        selection = input()
+        
+        try:
+            selection = selection.capitalize()
+
+            pokemon = pokemon_dict[selection]
+
+        except (KeyError):
+            if selection == '':
+                print("You must write the name of a pokemon")
+            else:
+                print("You must write the name of a pokemon from Generation 1")
+
+        else:
+            print(f"You selected: {pokemon}!")
 
     return pokemon
 
@@ -31,6 +53,6 @@ while True:
     print(player1)
     print(player2)
 
-    print(player1.type1)
+    print(player1.get('Type 1'))
     
     break
