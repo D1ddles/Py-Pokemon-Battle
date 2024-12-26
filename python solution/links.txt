@@ -1,2 +1,2 @@
 pokemon-stats stats from: https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_base_stats_in_Generation_I
-pokemon-stats types from: https://pokemondb.net/tools/text-list
+pokemon-stats types from: https://pokemon.fandom.com/wiki/List_of_Generation_I_Pok%C3%A9mon#cite_note-1 (look at references)

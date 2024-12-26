@@ -4,20 +4,51 @@ from pathlib import Path
 
 from models.models import Poke_type, Pokemon
 
+def create_poke_types() -> dict:
+    """
+    Creates all Poke_type objects and returns all in a dict
+    """
+    types = {}
+    type_names = ["Bug", "Dragon", "Electric", "Fighting", "Fire", "Flying", "Ghost", "Grass", "Ground", "Ice", "Normal", "Poison", "Psychic", "Rock", "Water"]
+    
+    for name in type_names:
+        types[name] = Poke_type(name=name)
+
+    for type in types.values():
+        type.set_relationships()
+
+    return types
+
 def write_pickle():
+    """
+    Takes data from pokemon-stats.csv to create Pokemon objects for all pokemon in the csv and write to a pickle file
+    """
     data = []
+    types = create_poke_types()
+
     with open('python solution/pokemon-stats.csv', 'r') as file:
         reader = csv.reader(file)
         next(reader) # skip headers
+
         for row in reader:
-            poke = Pokemon(*row)
-            data.append(poke)
+            poke_data = row
+            
+            # replace types strings with type objects
+            for i in [2,3]:
+                if poke_data[i]:
+                    poke_data[i] = types.get(poke_data[i])
+            
+            pokemon = Pokemon(*poke_data)
+
+            data.append(pokemon)
 
     with open("python solution/models/pokemon.pkl", "wb") as file:
         pickle.dump(data, file)
 
 def get_pokemon() -> dict:
-
+    """
+    Reads the pokemon pickle file and creates a dictionary of "pokemon name": "Pokemon object" for all pokemon
+    """
     file_path = Path("python solution/models/pokemon.pkl")
 
     if not file_path.exists():
@@ -26,7 +57,6 @@ def get_pokemon() -> dict:
 
     with file_path.open('rb') as file:
         data = pickle.load(file)
-        print(data)
 
         pokemon_dict = {}
         for pokemon in data:
@@ -35,6 +65,9 @@ def get_pokemon() -> dict:
         return pokemon_dict
 
 def pokemon_select(pokemon_dict: dict) -> Pokemon:
+    """
+    Lets the user input the name of a pokemon and returns that pokemon object from the pokemon dict
+    """
     pokemon = None
 
     while not pokemon:
@@ -43,7 +76,6 @@ def pokemon_select(pokemon_dict: dict) -> Pokemon:
         
         try:
             selection = selection.capitalize()
-
             pokemon = pokemon_dict[selection]
 
         except (KeyError):
@@ -66,6 +98,6 @@ while True:
     print(player1)
     print(player2)
 
-    print(player1.type1)
+    print(player1.type1.name)
     
     break
