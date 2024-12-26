@@ -1,6 +1,3 @@
-import csv
-import pickle
-
 def get_type_relationships(type_name: str) -> dict:
     return {
         "Normal": {
@@ -95,15 +92,7 @@ def get_type_relationships(type_name: str) -> dict:
         }
     }.get(type_name, {"strong": [], "weak": [], "not_affect": []})
 
-def write_pickle():
-    data = []
-    with open('pokemon-stats.csv', 'r') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            data.append(row)
 
-    with open("models/pokemon.pkl", "wb") as file:
-        pickle.dump(data, file)
 
 # Ensures following code is only run when the file is executed directly (when the file is the "main")
 if __name__ == "__main__":

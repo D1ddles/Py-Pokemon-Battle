@@ -1,27 +1,40 @@
 import pickle
+import csv
 from pathlib import Path
 
 from models.models import Poke_type, Pokemon
-from models.models_helper import write_pickle
+
+def write_pickle():
+    data = []
+    with open('python solution/pokemon-stats.csv', 'r') as file:
+        reader = csv.reader(file)
+        next(reader) # skip headers
+        for row in reader:
+            poke = Pokemon(*row)
+            data.append(poke)
+
+    with open("python solution/models/pokemon.pkl", "wb") as file:
+        pickle.dump(data, file)
 
 def get_pokemon() -> dict:
 
-    file_path = Path("models/pokemon.pkl")
+    file_path = Path("python solution/models/pokemon.pkl")
 
     if not file_path.exists():
         write_pickle()
-        file_path = Path("models/pokemon.pkl")
+        file_path = Path("python solution/models/pokemon.pkl")
 
     with file_path.open('rb') as file:
         data = pickle.load(file)
+        print(data)
 
         pokemon_dict = {}
         for pokemon in data:
-            pokemon_dict[pokemon["Name"]] = pokemon
+            pokemon_dict[pokemon.name] = pokemon
 
         return pokemon_dict
 
-def pokemon_select(pokemon_dict: dict) -> dict:
+def pokemon_select(pokemon_dict: dict) -> Pokemon:
     pokemon = None
 
     while not pokemon:
@@ -53,6 +66,6 @@ while True:
     print(player1)
     print(player2)
 
-    print(player1.get('Type 1'))
+    print(player1.type1)
     
     break
