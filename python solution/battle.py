@@ -98,6 +98,6 @@ while True:
     print(player1)
     print(player2)
 
-    print(player1.type1.name)
+    print(player1.type1.strong)
     
     break

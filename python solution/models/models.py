@@ -1,6 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import List
+from random import randint
 
 from models.models_helper import get_type_relationships
 
@@ -75,3 +76,46 @@ class Pokemon:
     #             mult *= 0
 
     #     return mult
+
+@dataclass
+class Move:
+
+    name: str
+    type: Poke_type
+    category: str
+    power: int
+    accuracy: int
+    pp: int
+    effect: str
+
+    def __str__(self):
+        return self.name
+    
+    def damage_calc(self, attacking: Pokemon, defending: Pokemon):
+
+        # calculating damage multipliers
+        if self.category == "Special":
+            atk = attacking.atk
+            dfs = defending.dfs
+        else:
+            atk = attacking.spec
+            dfs = defending.spec
+        
+        type1 = attacking.type1
+        type2 = attacking.type2
+
+        if randint(0, 255) > randint(0, 255):
+            crit = 2
+        else:
+            crit = 1
+
+        if self.type in [type1, type2]:
+            stab = 1.5
+        else:
+            stab = 1
+
+        # damage calculation
+        damage = ((2*crit+2)*self.power*atk/dfs)/50
+        damage += 2*stab*type1.type_effectiveness(self.type)*type2.type_effectiveness(self.type)
+        if damage != 1:
+            damage *= (randint(217,255)/255) # "random"
