@@ -1,10 +1,55 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
+from pathlib import Path
+import pickle
 from typing import List
 from random import randint
 
 from models.models_helper import get_type_relationships
 
+# Functions needed for creating pokemon types (due to circular nature)
+def create_poke_types() -> dict:
+    """
+    Creates all Poke_type objects and returns all in a dict
+    """
+    types = {}
+    type_names = ["Bug", "Dragon", "Electric", "Fighting", "Fire", "Flying", "Ghost", "Grass", "Ground", "Ice", "Normal", "Poison", "Psychic", "Rock", "Water"]
+    
+    for name in type_names:
+        types[name] = Poke_type(name=name)
+
+    for type in types.values():
+        type.set_relationships()
+
+    return types
+
+def save_types():
+    """
+    Takes pokemon types dictionary and saves to a pickle file for external use
+    """
+    types = create_poke_types()
+
+    with open("python solution/models/types.pkl", "wb") as file:
+        pickle.dump(types, file)
+
+def get_types() -> dict:
+    """
+    Reads the types pickle file getting a dictionary of "type name": "type object" for all types
+    """
+    file_path = Path("python solution/models/types.pkl")
+
+    # Creates pickle file if it does not already exist
+    if not file_path.exists():
+        save_types()
+        file_path = Path("python solution/models/types.pkl")
+
+    with file_path.open('rb') as file:
+        data = pickle.load(file)
+
+        return data
+
+
+# Models required for battle
 @dataclass
 class Poke_type:
 
@@ -77,8 +122,12 @@ class Pokemon:
 
     #     return mult
 
+
 @dataclass
 class Move:
+    """
+    Base class for moves, find all moves in moves.py
+    """
 
     name: str
     type: Poke_type
@@ -86,12 +135,14 @@ class Move:
     power: int
     accuracy: int
     pp: int
-    effect: str
 
     def __str__(self):
         return self.name
     
     def damage_calc(self, attacking: Pokemon, defending: Pokemon):
+
+        if hasattr(self, "effect"):
+            print(self.effect) #TEMP print() to be removed when functions created
 
         # calculating damage multipliers
         if self.category == "Special":
@@ -101,14 +152,17 @@ class Move:
             atk = attacking.spec
             dfs = defending.spec
         
+        # setting attack types
         type1 = attacking.type1
         type2 = attacking.type2
 
+        # Random crits
         if randint(0, 255) > randint(0, 255):
             crit = 2
         else:
             crit = 1
 
+        # STAB (Same Type Attack Bonus) if attack is made by type of the pokemon
         if self.type in [type1, type2]:
             stab = 1.5
         else:
@@ -118,4 +172,4 @@ class Move:
         damage = ((2*crit+2)*self.power*atk/dfs)/50
         damage += 2*stab*type1.type_effectiveness(self.type)*type2.type_effectiveness(self.type)
         if damage != 1:
-            damage *= (randint(217,255)/255) # "random"
+            damage *= (randint(217,255)/255) # adds "random"-ness to the damage
