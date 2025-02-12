@@ -23,6 +23,7 @@ def create_poke_types() -> dict:
 
     return types
 
+### maybe move ###
 def save_types():
     """
     Takes pokemon types dictionary and saves to a pickle file for external use
@@ -32,6 +33,7 @@ def save_types():
     with open("python solution/models/types.pkl", "wb") as file:
         pickle.dump(types, file)
 
+### MOVE ###
 def get_types() -> dict:
     """
     Reads the types pickle file getting a dictionary of "type name": "type object" for all types
@@ -102,74 +104,3 @@ class Pokemon:
     
     def __str__(self):
         return self.name
-    
-    # Poke_type function "type_effectiveness" is more in line with damage formula
-    # def attack_effectiveness(self, move_type: Poke_type):
-    #     """
-    #     Returns damage multiplier based on the type of the attack and the types of the defending pokemon
-    #     """
-    #     mult = 1
-    #     for type in [self.type1, self.type2]:
-    #         if not type:
-    #             break
-
-    #         elif type.name in move_type.strong:
-    #             mult *= 2
-    #         elif type.name in move_type.weak:
-    #             mult *= 0.5
-    #         elif type.name in move_type.not_affect:
-    #             mult *= 0
-
-    #     return mult
-
-
-@dataclass
-class Move:
-    """
-    Base class for moves, find all moves in moves.py
-    """
-
-    name: str
-    type: Poke_type
-    category: str
-    power: int
-    accuracy: int
-    pp: int
-
-    def __str__(self):
-        return self.name
-    
-    def damage_calc(self, attacking: Pokemon, defending: Pokemon):
-
-        if hasattr(self, "effect"):
-            print(self.effect) #TEMP print() to be removed when functions created
-
-        # calculating damage multipliers
-        if self.category == "Special":
-            atk = attacking.atk
-            dfs = defending.dfs
-        else:
-            atk = attacking.spec
-            dfs = defending.spec
-        
-        # setting attack types
-        type1 = attacking.type1
-        type2 = attacking.type2
-
-        # Random crits
-        if randint(0, 255) > randint(0, 255):
-            crit = 2
-        else:
-            crit = 1
-
-        # STAB (Same Type Attack Bonus) if attack is made by type of the pokemon
-        if self.type in [type1, type2]:
-            stab = 1.5
-        else:
-            stab = 1
-
-        # damage calculation
-        damage = ((2*crit+2)*self.power*atk/dfs)/50
-        damage += 2*stab*type1.type_effectiveness(self.type)*type2.type_effectiveness(self.type)
-        if damage != 1:
-            damage *= (randint(217,255)/255) # adds "random"-ness to the damage

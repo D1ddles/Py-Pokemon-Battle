@@ -1,8 +1,24 @@
 import csv
+from dataclasses import dataclass
 
-from models.models import Move, get_types
+from models.models import Poke_type, get_types
 
-# TEMP Need to create functions for all move effects to add into Move definition
+# Class for moves
+@dataclass
+class Move:
+
+    name: str
+    type: Poke_type
+    category: str
+    power: int
+    accuracy: int
+    pp: int
+
+    def __str__(self):
+        return self.name
+    
+
+### TEMP ### Need to create functions for all move effects to add into Move definition
 def add_effect(effect: str):
     if effect == "User recovers half the HP inflicted on opponent.":
         return "User recovers half the HP inflicted on opponent."
