@@ -133,6 +133,8 @@ class Pokemon:
     dfs: Stat
     spd: Stat
     spec: Stat
+    acc: Stat = Stat(100, 100, 100)
+    eva: Stat = Stat(100, 100, 100)
     
     def __str__(self):
         return self.name
