@@ -1,6 +1,4 @@
-import math
 import csv
-from random import randint
 from pathlib import Path
 
 import pickle
@@ -89,59 +87,6 @@ def moves_select(pokemon: Pokemon, moves_dict: dict) -> Pokemon:
 
     return pokemon
 
-# Executes effect
-def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
-
-    if effect == "User recovers 50% of the damage dealt.":
-        attacking.hp += math.floor(dmg / 2)
-
-    elif effect == "33% chance to lower the target's Defense by 1.":
-        if randint(1,250) > 83:
-            defending.dfs.stage += 1
-
-    elif effect == "Raises the user's Defense by 2.":
-        attacking.dfs.stage += 2
-
-    elif effect == "Raises the user's Speed by 2.":
-        attacking.spd.stage += 2
-
-    elif effect == "Raises the user's Special by 2.":
-        attacking.spec.stage += 2
-
-    elif effect == "33% chance to lower the target's Attack by 1.":
-        if randint(1,250) > 83:
-            defending.atk.stage += 1
-    
-    elif effect == "Hits 2-5 times in one turn.":
-        random = randint(1,8)
-        if random in (1,2,3):
-            dmg *= 2
-        elif random in (4,5,6):
-            dmg *= 3
-        elif random == 7:
-            dmg *= 4
-        elif random == 8:
-            dmg *= 5
-
-    elif effect == "Waits 2-3 turns; deals double the damage taken.":
-        ### NEEDS DOING ###
-        print("UNFINISHED MOVE")
-    
-    elif effect == "Prevents the target from moving for 2-5 turns.":
-        ### NEEDS DOING ###
-        print("UNFINISHED MOVE")
-
-    elif effect == "10% chance to make the target flinch.":
-        ### NEEDS DOING ###
-        if randint(1, 10) == 10:
-            pass
-        print("UNFINISHED MOVE")
-
-    elif effect == "10% chance to freeze the target.":
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-
-    return dmg
 
 moves_dict = get_moves()
 

@@ -3,7 +3,6 @@ from dataclasses import dataclass, field
 from pathlib import Path
 import pickle
 from typing import List
-from random import randint
 
 from models.models_helper import get_type_relationships
 
@@ -94,14 +93,12 @@ class Poke_type:
 class Stat:
 
     base: int # base stat value
-    stage: int # stage increased/decreased by effects
-    real: int # real stat value based on its stage
-
-    def __post_init__(self):
-        self.set_real()
-
-    def set_real(self):
-        "Sets the real value based on the stage"
+    real: int  # real stat value based on level (100)
+    final: int  # final stat value after stage
+    stage: int = 0 # stage increased/decreased by effects
+    
+    def set_final(self):
+        "Sets the final value based on the stage"
         if self.stage == -6:
             self.real = self.base * 0.25
         elif self.stage == -5:

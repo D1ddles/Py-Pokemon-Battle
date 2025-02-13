@@ -28,11 +28,11 @@ def save_pokemon():
             # create real stats based on base stats
             # HP: 10 + L + (B * L / 50)
             hp = 10 + 100 + (poke_data[4] * 100 / 50)
-            poke_data[4] = Stat(hp, 0, 0)
+            poke_data[4] = Stat(poke_data[4], 0, hp)
             # Others: 5 + (B * L / 50)
             for i in range(5,9):
-                data = 5 + (poke_data[i] * 100 / 50)
-                poke_data[i] = Stat(data, 0, 0)
+                other = 5 + (poke_data[i] * 100 / 50)
+                poke_data[i] = Stat(poke_data[i], 0, other)
             
             pokemon = Pokemon(*poke_data)
 

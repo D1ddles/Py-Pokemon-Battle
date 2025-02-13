@@ -30,39 +30,39 @@ def move_select(player):
 
 def battle(player1, player2):
 
-    print(f"Player 1 {player1.name}'s health: {player1.hp}")
-    print(f"Player 2 {player2.name}'s health: {player2.hp}")
+    print(f"Player 1 {player1.name}'s health: {player1.hp.final}")
+    print(f"Player 2 {player2.name}'s health: {player2.hp.final}")
 
     print("Player 1's turn!")
     move = move_select(player1)
 
-    damage = damage_calc(move, player1, player2)
+    damage, player1, player2 = damage_calc(move, player1, player2)
     print(f"Damage dealt: {damage}")
 
-    print(f"Player 1 {player1.name}'s health: {player1.hp}")
-    print(f"Player 2 {player2.name}'s health: {player2.hp}")
+    print(f"Player 1 {player1.name}'s health: {player1.hp.final}")
+    print(f"Player 2 {player2.name}'s health: {player2.hp.final}")
 
     print("Player 2's turn!")
     move = move_select(player2)
 
-    damage = damage_calc(move, player2, player1)
+    damage, player2, player1 = damage_calc(move, player2, player1)
     print(f"Damage dealt: {damage}")
 
-    print(f"Player 1 {player1.name}'s health: {player1.hp}")
-    print(f"Player 2 {player2.name}'s health: {player2.hp}")
+    print(f"Player 1 {player1.name}'s health: {player1.hp.final}")
+    print(f"Player 2 {player2.name}'s health: {player2.hp.final}")
 
 
 while True:
 
     player1, player2 = setup()
 
-    while player1.hp > 0 and player2.hp > 0:
+    while player1.hp.final > 0 and player2.hp.final > 0:
         battle(player1, player2)
 
-    if player1.hp > 0:
+    if player1.hp.final > 0:
         print("Player 1 wins!")
 
-    elif player2.hp > 0:
+    elif player2.hp.final > 0:
         print("Player 2 wins!")
 
     break

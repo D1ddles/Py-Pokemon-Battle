@@ -33,7 +33,7 @@ Double Kick,Fighting,Physical,30,100,30,Hits 2 times in one turn.
 Double Slap,Normal,Physical,15,85,10,Hits 2-5 times in one turn.
 Double Team,Normal,Status,0,0,15,Raises the user's evasiveness by 1.
 Double-Edge,Normal,Physical,100,100,15,Has 1/4 recoil.
-Dragon Rage,Dragon,Special,1,100,10,Deals 40 HP of damage to the target.
+Dragon Rage,Dragon,Special,0,100,10,Deals 40 HP of damage to the target.
 Dream Eater,Psychic,Special,100,100,15,User gains 1/2 HP inflicted. Sleeping target only.
 Drill Peck,Flying,Physical,80,100,20,No additional effect.
 Earthquake,Ground,Physical,100,100,10,No additional effect.
@@ -126,7 +126,7 @@ Smog,Poison,Special,20,70,20,40% chance to poison the target.
 Smokescreen,Normal,Status,0,100,20,Lowers the target's accuracy by 1.
 Soft-Boiled,Normal,Status,0,0,10,Heals the user by 50% of its max HP.
 Solar Beam,Grass,Special,120,100,10,Charges turn 1. Hits turn 2.
-Sonic Boom,Normal,Special,1,90,20,Always does 20 HP of damage.
+Sonic Boom,Normal,Special,0,90,20,Always does 20 HP of damage.
 Spike Cannon,Normal,Physical,20,100,15,Hits 2-5 times in one turn.
 Splash,Normal,Status,0,0,40,No competitive use.
 Spore,Grass,Status,0,100,15,Causes the target to fall asleep.

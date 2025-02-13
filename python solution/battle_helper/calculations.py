@@ -3,7 +3,7 @@ from random import randint
 
 from models.models import Pokemon, Move
 
-from moves import effect
+from .effects import effect
 
 # Battle functions
 def damage_calc(move: Move, attacking: Pokemon, defending: Pokemon):
@@ -13,11 +13,11 @@ def damage_calc(move: Move, attacking: Pokemon, defending: Pokemon):
 
             # calculating damage multipliers
             if move.category == "Special":
-                atk = attacking.atk.real
-                dfs = defending.dfs.real
+                atk = attacking.atk.final
+                dfs = defending.dfs.final
             else:
-                atk = attacking.spec
-                dfs = defending.spec
+                atk = attacking.spec.final
+                dfs = defending.spec.final
             
             # setting attack types
             atk_type1 = attacking.type1
@@ -27,12 +27,26 @@ def damage_calc(move: Move, attacking: Pokemon, defending: Pokemon):
             def_type1 = defending.type1
             def_type2 = defending.type2
 
+            ### Critical hits use the attacker and defender's original stats with no modifications
+
             # Random crits
-            if randint(0, 255) > randint(0, 255):
-                crit = 2
-                print("Critical hit!")
+            if move.effect == "High critical hit ratio.":
+                if randint(0,255) < (defending.spd.base * 100 / 64):
+                    crit = 2
+                    print("Critical hit!")
+
+            elif move.effect == "Quarters the user's chance for a critical hit.":
+                # Bugged move in Gen 1
+                if randint(0,255) < (defending.spd.base * 100 / 2048):
+                    crit = 2
+                    print("Critical hit!")
+
             else:
-                crit = 1
+                if randint(0,255) < (defending.spd.base * 100 / 512):
+                    crit = 2
+                    print("Critical hit!")
+                else:
+                    crit = 1
 
             # STAB (Same Type Attack Bonus) if attack is made by type of the pokemon
             if move.type in [atk_type1, atk_type2]:
@@ -52,6 +66,6 @@ def damage_calc(move: Move, attacking: Pokemon, defending: Pokemon):
             defending.hp = defending.hp - damage
         
         if move.effect:
-            damage = effect(move.effect, damage, attacking, defending)
+            damage, attacking, defending = effect(move.effect, damage, attacking, defending)
 
-        return math.floor(damage)
+        return math.floor(damage), attacking, defending
