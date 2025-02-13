@@ -2,3 +2,5 @@ pokemon-stats stats from: https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3
 pokemon-stats types from: https://pokemon.fandom.com/wiki/List_of_Generation_I_Pok%C3%A9mon (look at references)
 
 damage formula from: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_I
+
+pokemon moves from: https://www.smogon.com/dex/rb/moves/

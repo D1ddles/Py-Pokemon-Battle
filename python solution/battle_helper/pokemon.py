@@ -2,7 +2,7 @@ import pickle
 import csv
 from pathlib import Path
 
-from models.models import Pokemon, create_poke_types
+from models.models import Pokemon, Stat, create_poke_types
 
 # Pickle file saving functions
 def save_pokemon():
@@ -27,10 +27,12 @@ def save_pokemon():
 
             # create real stats based on base stats
             # HP: 10 + L + (B * L / 50)
-            poke_data[4] = 10 + 100 + (poke_data[4] * 100 / 50)
-            # Other: 5 + (B * L / 50)
+            hp = 10 + 100 + (poke_data[4] * 100 / 50)
+            poke_data[4] = Stat(hp, 0, 0)
+            # Others: 5 + (B * L / 50)
             for i in range(5,9):
-                poke_data[i] = 5 + (poke_data[i] * 100 / 50)
+                data = 5 + (poke_data[i] * 100 / 50)
+                poke_data[i] = Stat(data, 0, 0)
             
             pokemon = Pokemon(*poke_data)
 

@@ -65,15 +65,12 @@ class Poke_type:
         self.set_relationships()
 
     def set_relationships(self):
-        # Defines relationships between types as specified in helper
+        "Defines relationships between types"
         relationships = get_type_relationships(self.name)
         self.strong = relationships["strong"]
         self.weak = relationships["weak"]
         self.not_affect = relationships["not_affect"]
 
-    def __str__(self):
-        return self.name
-    
     def type_effectiveness(self, move_type: Poke_type) -> int:
         """
         Returns damage multiplier based on the type of an attack
@@ -87,7 +84,45 @@ class Poke_type:
         elif self.name in move_type.not_affect:
             mult *= 0
 
-        return mult
+        return mult 
+
+    def __str__(self):
+        return self.name
+    
+    
+@dataclass
+class Stat:
+
+    base: int # base stat value
+    stage: int # stage increased/decreased by effects
+    real: int # real stat value based on its stage
+
+    def __post_init__(self):
+        self.set_real()
+
+    def set_real(self):
+        "Sets the real value based on the stage"
+        if self.stage == -6:
+            self.real = self.base * 0.25
+        elif self.stage == -5:
+            self.real = self.base * 0.28
+        elif self.stage == -4:
+            self.real = self.base * 0.33
+        elif self.stage == -3:
+            self.real = self.base * 0.4
+        elif self.stage == -2:
+            self.real = self.base * 0.5
+        elif self.stage == -1:
+            self.real = self.base * 0.66
+        elif self.stage == 0:
+            self.real = self.base * 1
+        elif self.stage > 0:
+            mult = self.stage * 0.5 + 1
+            self.real = self.base * mult
+
+    def __str__(self):
+        return self.real
+
 
 @dataclass
 class Pokemon:
@@ -96,11 +131,27 @@ class Pokemon:
     name: str
     type1: Poke_type
     type2: Poke_type
-    hp: int 
-    atk: int
-    dfs: int
-    spd: int
-    spec: int
+    hp: Stat
+    atk: Stat
+    dfs: Stat
+    spd: Stat
+    spec: Stat
     
     def __str__(self):
         return self.name
+    
+    
+@dataclass
+class Move:
+
+    name: str
+    type: Poke_type
+    category: str
+    power: int
+    accuracy: int
+    pp: int
+    effect: str
+
+    def __str__(self):
+        return self.name
+    

@@ -3,20 +3,17 @@ from battle_helper.moves import moves_dict, moves_select
 from battle_helper.calculations import damage_calc
 
 def setup():
-    "Allows 2 users to select pokemon and their moves, then prints the moves"
+    "Allows 2 players to select pokemon and their moves"
     player1 = pokemon_select(pokemon_dict)
     player2 = pokemon_select(pokemon_dict)
 
-    player1 = moves_select(player1)
-    player2 = moves_select(player2)
-
-    print(player1.moves)
-    print(player2.moves)
+    player1 = moves_select(player1, moves_dict)
+    player2 = moves_select(player2, moves_dict)
 
     return player1, player2
 
 def move_select(player):
-
+    "Displays a player's available moves, allows them to select one then makes that move"
     while True:
 
         print(f"Player's moves: ")
@@ -64,7 +61,7 @@ while True:
 
     if player1.hp > 0:
         print("Player 1 wins!")
-        
+
     elif player2.hp > 0:
         print("Player 2 wins!")
 
