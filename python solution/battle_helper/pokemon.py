@@ -24,6 +24,13 @@ def save_pokemon():
             for i in [2,3]:
                 if poke_data[i]:
                     poke_data[i] = types.get(poke_data[i])
+
+            # create real stats based on base stats
+            # HP: 10 + L + (B * L / 50)
+            poke_data[4] = 10 + 100 + (poke_data[4] * 100 / 50)
+            # Other: 5 + (B * L / 50)
+            for i in range(5,9):
+                poke_data[i] = 5 + (poke_data[i] * 100 / 50)
             
             pokemon = Pokemon(*poke_data)
 
