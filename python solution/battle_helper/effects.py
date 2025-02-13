@@ -10,34 +10,45 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
     """
 
     if effect == "User recovers 50% of the damage dealt.":
-        attacking.hp.final += math.floor(dmg / 2)
+        heal = math.floor(dmg / 2)
+        print(f"{attacking.name} healed {heal} HP!")
+        attacking.hp.final += heal
 
     elif effect == "33% chance to lower the target's Defense by 1.":
         if randint(1,250) > 83:
+            print(f"{defending.name}'s Defense fell!")
             defending.dfs.stage -= 1
 
     elif effect == "Raises the user's Defense by 2.":
+        print(f"{attacking.name}'s Defense rose greatly!")
         attacking.dfs.stage += 2
 
     elif effect == "Raises the user's Speed by 2.":
+        print(f"{attacking.name}'s Speed rose greatly!")
         attacking.spd.stage += 2
 
     elif effect == "Raises the user's Special by 2.":
+        print(f"{attacking.name}'s Specuak rose greatly!")
         attacking.spec.stage += 2
 
     elif effect == "33% chance to lower the target's Attack by 1.":
         if randint(1,250) > 83:
+            print(f"{defending.name}'s Attack fell!")
             defending.atk.stage -= 1
     
     elif effect == "Hits 2-5 times in one turn.":
         random = randint(1,8)
         if random in (1,2,3):
+            print("Hit 2 times!")
             dmg *= 2
         elif random in (4,5,6):
+            print("Hit 3 times!")
             dmg *= 3
         elif random == 7:
+            print("Hit 4 times!")
             dmg *= 4
         elif random == 8:
+            print("Hit 5 times!")
             dmg *= 5
 
     elif effect == "Waits 2-3 turns; deals double the damage taken.":
@@ -63,10 +74,12 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         print("UNFINISHED MOVE")
     
     elif effect == "Hits 2 times in one turn.":
+        print("Hit 2 times!")
         dmg *= 2
 
     elif effect == "33% chance to lower the target's Speed by 1.":
         if randint(1,250) > 83:
+            print(f"{defending.name}'s Speed fell!")
             defending.spd.stage -= 1
 
     elif effect == "Confuses the target.":
@@ -82,6 +95,7 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
     elif effect == "User becomes the same type as the target.":
         attacking.type1 = defending.type1
         attacking.type2 = defending.type2
+        print(f"{attacking.name} became the types {defending.type1} and {defending.type2}!")
     
     elif effect == "If hit by Normal/Fighting move, deals 2x damage.":
         ### NEEDS DOING ###
@@ -89,6 +103,7 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         print("UNFINISHED MOVE")
 
     elif effect == "Raises the user's Defense by 1.":
+        print(f"{attacking.name}'s Defense rose!")
         attacking.dfs.stage += 1
     
     elif effect == "Digs underground turn 1, strikes turn 2.":
@@ -106,7 +121,9 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
     
     elif effect == "Has 1/4 recoil.":
         ### NOT FAITHFUL IMPLEMENTATION
-        attacking.hp.final -= math.floor(dmg / 4)
+        recoil = math.floor(dmg / 4)
+        print(f"{attacking.name} took {recoil} recoil damage!")
+        attacking.hp.final -= recoil
     
     elif effect == "Deals 40 HP of damage to the target.":
         dmg = 40
@@ -134,6 +151,7 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
     
     elif effect == "Deals 65535 damage. Fails if target is faster.":
         if attacking.spd.final > defending.spd.final:
+            print(f"{attacking.name} is faster than {defending.name}!")
             dmg = 65535
         else:
             dmg = 0
@@ -152,12 +170,15 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         print("UNFINISHED MOVE")
 
     elif effect == "Lowers the target's Attack by 1.":
+        print(f"{defending.name}'s Attack fell!")
         defending.atk.stage -= 1
 
     elif effect == "Raises the user's Special by 1.":
+        print(f"{attacking.name}'s Special rose!")
         attacking.spec.stage += 1
     
     elif effect == "Resets all stat changes. Removes foe's status.":
+        print("All stat changes reset!")
         attacking.dfs.stage = 0
         attacking.atk.stage = 0
         attacking.spd.stage = 0
@@ -175,6 +196,7 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
     
     elif effect == "User takes 1 HP of damage if it misses.":
         if dmg == 0:
+            print(f"{attacking.name} took 1 damage for missing!")
             attacking.hp.final -= 1
 
     elif effect == "Can't move next turn if target or sub is not KOed.":
@@ -198,6 +220,7 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         print("UNFINISHED MOVE")
     
     elif effect == "Lowers the target's Defense by 1.":
+        print(f"{defending.name}'s Defense fell!")
         defending.dfs.stage -= 1
     
     elif effect == "While active, user's Special is 2x when damaged.":
@@ -205,6 +228,7 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         print("UNFINISHED MOVE")
 
     elif effect == "Raises the user's Attack by 1.":
+        print(f"{attacking.name}'s Attack rose!")
         attacking.atk.stage += 1
     
     elif effect == "Picks a random move.":
@@ -245,6 +269,7 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
     
     elif effect == "33% chance to lower the target's Special by 1.":
         if randint(1,250) > 83:
+            print(f"{defending.name}'s Special fell!")
             defending.spec.stage -= 1
 
     elif effect == "Random damage from 1 to (user's level*1.5 - 1).":
@@ -274,6 +299,7 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         print("Does nothing.")
 
     elif effect == "Lowers the target's Defense by 2.":
+        print(f"{defending.name}'s Defense fell greatly!")
         defending.dfs.stage -= 2
 
     elif effect == "Damage = user's level. Can hit Ghost types.":
@@ -293,14 +319,19 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         dmg = 20
 
     elif effect == "Lowers the target's Speed by 1.":
+        print(f"{defending.name}'s Speed fell!")
         defending.spd.stage -= 1
 
     elif effect == "User loses 1/2 the HP lost by the target.":
-        attacking.hp.final -= math.floor(dmg / 2)
+        lost = math.floor(dmg / 2)
+        print(f"{attacking.name} lost {lost} HP!")
+        attacking.hp.final -= lost
 
     elif effect == "User takes 1/4 its max HP to put in a Substitute.":
         ### NEEDS DOING ###
-        attacking.hp
+        lost = math.floor(attacking.hp.final / 4)
+        print(f"{attacking.name} puts {lost} HP into its Substitute!")
+        attacking.hp.final -= lost
         print("UNFINISHED MOVE")
 
     elif effect == "Damage = 1/2 target's current HP. Hits Ghosts.":
@@ -317,9 +348,11 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         print("UNFINISHED MOVE")
 
     elif effect == "Raises the user's Attack by 2.":
+        print(f"{attacking.name}'s Attack rose greatly!")
         attacking.atk.stage += 2
 
     elif effect == "Lowers the target's Defense by 1.":
+        print(f"{defending.name}'s Defense fell!")
         defending.dfs.stage -= 1
     
     elif effect == "Fails when used.":
@@ -343,6 +376,7 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         print("UNFINISHED MOVE")
 
     elif effect == "Hits 2 times. Last hit has 20% chance to poison.":
+        print("Hit 2 times!")
         dmg *= 2
         ### STATUSES NEEDS DOING ###
         print("UNFINISHED MOVE")

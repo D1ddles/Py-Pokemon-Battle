@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pickle
 
-from models.models import Pokemon, Move
+from models.models import Pokemon, Move, create_poke_types
 
 def read_moves() -> dict:
     """
@@ -12,6 +12,7 @@ def read_moves() -> dict:
     """
     # Creates empty dictionary for adding pokemon moves
     moves_dict = {}
+    types = create_poke_types()
 
     with open('python solution/moves.csv', 'r') as file:
         reader = csv.reader(file)
@@ -20,6 +21,7 @@ def read_moves() -> dict:
         for row in reader:
             # Grabs move data, saving numbers as integers
             data = [int(data) if data.isdigit() else data for data in row]
+            data[1] = types.get(data[1])
 
             # Creates a new Move object based on the data and adds its effect as a new function
             move = Move(*data) 
