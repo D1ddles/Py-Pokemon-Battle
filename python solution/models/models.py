@@ -158,9 +158,10 @@ class Pokemon:
     dfs: Stat
     spd: Stat
     spec: Stat
-    acc: Stat = Stat(100, 100, 100)
-    eva: Stat = Stat(100, 100, 100)
-    condition: str
+
+    def __post_init__(self):
+        self.acc = Stat(100, 100, 100)
+        self.eva = Stat(100, 100, 100)
     
     def __str__(self):
         return self.name
@@ -180,3 +181,8 @@ class Move:
     def __str__(self):
         return self.name
     
+@dataclass
+class Player:
+
+    pokemon: list[Pokemon]
+    selected_poke: Pokemon

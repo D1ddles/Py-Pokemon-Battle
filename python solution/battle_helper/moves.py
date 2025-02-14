@@ -64,14 +64,18 @@ def moves_select(pokemon: Pokemon, moves_dict: dict) -> Pokemon:
     # Create empty move list for 4 moves
     movelist = []
 
-    while len(movelist) != 4:
+    while len(movelist) != 2: # Only two moves for testing for now
         print(f"Select a move to give to {pokemon}: ")
         selection = input()
 
         try:
             selection = selection.capitalize()
             # Selects Move object from dictionary
+            print(selection)
+            print(moves_dict["Pay Day"])
             move = moves_dict[selection]
+
+            movelist.append(move)
         
         except(KeyError):
             if selection == '':
@@ -82,8 +86,6 @@ def moves_select(pokemon: Pokemon, moves_dict: dict) -> Pokemon:
         else:
             print(f"You selected {move}!")
     
-        movelist.append(move)
-        
     pokemon.moves = movelist
 
     return pokemon

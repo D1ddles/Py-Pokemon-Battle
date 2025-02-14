@@ -2,7 +2,7 @@ import pickle
 import csv
 from pathlib import Path
 
-from models.models import Pokemon, Stat, create_poke_types
+from models.models import Player, Pokemon, Stat, create_poke_types
 
 # Pickle file saving functions
 def save_pokemon():
@@ -62,14 +62,14 @@ def get_pokemon() -> dict:
         return pokemon_dict
     
 # Selection functions
-def pokemon_select(pokemon_dict: dict) -> list[Pokemon]:
+def pokemon_select(pokemon_dict: dict) -> Player:
     """
     Lets the user input the name of pokemon to make their party and returns 
     those pokemon objects from the pokemon dict
     """
     pokemon = []
 
-    while len(pokemon) != 2:
+    while len(pokemon) != 1: # Only 1 pokemon for testing for now
         print("Select a pokemon: ")
         selection = input()
         
@@ -77,6 +77,7 @@ def pokemon_select(pokemon_dict: dict) -> list[Pokemon]:
             selection = selection.capitalize()
             # Selects Pokemon object from dictionary
             selected_pokemon = pokemon_dict[selection]
+            pokemon.append(selected_pokemon)
 
         except (KeyError):
             if selection == '':
@@ -87,8 +88,7 @@ def pokemon_select(pokemon_dict: dict) -> list[Pokemon]:
         else:
             print(f"You selected: {selected_pokemon}!")
 
-        pokemon.append(selected_pokemon)
-
-    return pokemon
+    player = Player(pokemon, selected_poke=pokemon[0])
+    return player
 
 pokemon_dict = get_pokemon()

@@ -7,11 +7,11 @@ def setup():
     player1 = pokemon_select(pokemon_dict)
     player2 = pokemon_select(pokemon_dict)
 
-    for pokemon in player1:
+    for pokemon in player1.pokemon:
         pokemon = moves_select(pokemon, moves_dict)
         
-    for pokemon in player2:
-        pokemon = moves_select(player2, moves_dict)
+    for pokemon in player2.pokemon:
+        pokemon = moves_select(pokemon, moves_dict)
 
     return player1, player2
 
@@ -59,13 +59,13 @@ while True:
 
     player1, player2 = setup()
 
-    while player1[0].hp.final > 0 and player2[0].hp.final > 0:
-        battle(player1[0], player2[0])
+    while player1.pokemon[0].hp.final > 0 and player2.pokemon[0].hp.final > 0:
+        battle(player1.pokemon[0], player2.pokemon[0])
 
-    if player1[0].hp.final > 0:
+    if player1.pokemon[0].hp.final > 0:
         print("Player 1 wins!")
 
-    elif player2[0].hp.final > 0:
+    elif player2.pokemon[0].hp.final > 0:
         print("Player 2 wins!")
 
     break

@@ -108,6 +108,8 @@ def before_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon)
             print(f"{attacking.name} is faster than {defending.name}!") # un-faithful
             dmg = 65535
         else:
+            print(f"{attacking.name} was slower than {defending.name}!") # un-faithful
+            print("Nothing happens")
             dmg = 0
 
     return dmg, attacking, defending
@@ -265,7 +267,8 @@ def after_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
 
     elif effect == "Resets all stat changes. Removes foe's status.":
          ### STATUSES NEEDS DOING ###
-        print("All stat changes reset!")
+        print(f"All stat changes reset! {defending.name}'s status removed!")
+        defending.condition = ''
         attacking.dfs.stage = 0
         attacking.atk.stage = 0
         attacking.spd.stage = 0
@@ -274,7 +277,6 @@ def after_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         defending.atk.stage = 0
         defending.spd.stage = 0
         defending.spec.stage = 0
-        print("UNFINISHED MOVE")
 
     elif effect == "User takes 1/4 its max HP to put in a Substitute.":
         ### NEEDS DOING ###
