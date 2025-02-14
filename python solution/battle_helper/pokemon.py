@@ -25,14 +25,14 @@ def save_pokemon():
                 if poke_data[i]:
                     poke_data[i] = types.get(poke_data[i])
 
-            # create real stats based on base stats
+            # create real stats based on base stats (based on level 100)
             # HP: 10 + L + (B * L / 50)
             hp = 10 + 100 + (poke_data[4] * 100 / 50)
-            poke_data[4] = Stat(poke_data[4], 0, hp)
+            poke_data[4] = Stat(poke_data[4], hp, hp)
             # Others: 5 + (B * L / 50)
             for i in range(5,9):
                 other = 5 + (poke_data[i] * 100 / 50)
-                poke_data[i] = Stat(poke_data[i], 0, other)
+                poke_data[i] = Stat(poke_data[i], other, other)
             
             pokemon = Pokemon(*poke_data)
 
@@ -62,20 +62,21 @@ def get_pokemon() -> dict:
         return pokemon_dict
     
 # Selection functions
-def pokemon_select(pokemon_dict: dict) -> Pokemon:
+def pokemon_select(pokemon_dict: dict) -> list[Pokemon]:
     """
-    Lets the user input the name of a pokemon and returns that pokemon object from the pokemon dict
+    Lets the user input the name of pokemon to make their party and returns 
+    those pokemon objects from the pokemon dict
     """
-    pokemon = None
+    pokemon = []
 
-    while not pokemon:
+    while len(pokemon) != 2:
         print("Select a pokemon: ")
         selection = input()
         
         try:
             selection = selection.capitalize()
             # Selects Pokemon object from dictionary
-            pokemon = pokemon_dict[selection]
+            selected_pokemon = pokemon_dict[selection]
 
         except (KeyError):
             if selection == '':
@@ -84,7 +85,9 @@ def pokemon_select(pokemon_dict: dict) -> Pokemon:
                 print("You must write the name of a pokemon from Generation 1")
 
         else:
-            print(f"You selected: {pokemon}!")
+            print(f"You selected: {selected_pokemon}!")
+
+        pokemon.append(selected_pokemon)
 
     return pokemon
 

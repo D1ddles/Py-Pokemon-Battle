@@ -7,22 +7,25 @@ def setup():
     player1 = pokemon_select(pokemon_dict)
     player2 = pokemon_select(pokemon_dict)
 
-    player1 = moves_select(player1, moves_dict)
-    player2 = moves_select(player2, moves_dict)
+    for pokemon in player1:
+        pokemon = moves_select(pokemon, moves_dict)
+        
+    for pokemon in player2:
+        pokemon = moves_select(player2, moves_dict)
 
     return player1, player2
 
-def move_select(player):
-    "Displays a player's available moves, allows them to select one then makes that move"
+def attack_select(pokemon):
+    "Displays a player's pokemon's available moves, allows them to select one"
     while True:
 
-        print(f"Player's moves: ")
-        for move in player.moves:
+        print(f"Player 1 {pokemon.name}'s moves: ")
+        for move in pokemon.moves:
             print(move)
 
         selected = input("Select a move: ").capitalize()
 
-        for move in player.moves:
+        for move in pokemon.moves:
             if selected == move.name:
                 return move
         
@@ -34,7 +37,7 @@ def battle(player1, player2):
     print(f"Player 2 {player2.name}'s health: {player2.hp.final}")
 
     print("Player 1's turn!")
-    move = move_select(player1)
+    move = attack_select(player1)
 
     damage, player1, player2 = damage_calc(move, player1, player2)
     print(f"Damage dealt: {damage}")
@@ -43,7 +46,7 @@ def battle(player1, player2):
     print(f"Player 2 {player2.name}'s health: {player2.hp.final}")
 
     print("Player 2's turn!")
-    move = move_select(player2)
+    move = attack_select(player2)
 
     damage, player2, player1 = damage_calc(move, player2, player1)
     print(f"Damage dealt: {damage}")
@@ -56,13 +59,13 @@ while True:
 
     player1, player2 = setup()
 
-    while player1.hp.final > 0 and player2.hp.final > 0:
-        battle(player1, player2)
+    while player1[0].hp.final > 0 and player2[0].hp.final > 0:
+        battle(player1[0], player2[0])
 
-    if player1.hp.final > 0:
+    if player1[0].hp.final > 0:
         print("Player 1 wins!")
 
-    elif player2.hp.final > 0:
+    elif player2[0].hp.final > 0:
         print("Player 2 wins!")
 
     break

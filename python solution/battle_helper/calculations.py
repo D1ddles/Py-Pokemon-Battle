@@ -12,10 +12,11 @@ def damage_calc(move: Move, attacking: Pokemon, defending: Pokemon):
     if move.accuracy:
         # Accuracy check
         accuracy = (move.accuracy*2.55) * attacking.acc.final * defending.eva.final
+        # limits accuracy to 255
         if accuracy > 255:
             accuracy = 255
 
-        if randint(1,256) < accuracy:
+        if randint(0,255) < accuracy:
             pass  
         else:
             print("Attack missed!")
@@ -43,9 +44,8 @@ def damage_calc(move: Move, attacking: Pokemon, defending: Pokemon):
 
         ### Critical hits use the attacker and defender's original stats with no modifications
 
-        # Random crits7
+        # Random crits
         crit = 1
-
         if move.effect == "High critical hit ratio.":
             if randint(0,255) < (defending.spd.base * 100 / 64):
                 crit = 2
@@ -62,23 +62,31 @@ def damage_calc(move: Move, attacking: Pokemon, defending: Pokemon):
                 crit = 2
                 print("Critical hit!")
 
-        # STAB (Same Type Attack Bonus) if attack is made by type of the pokemon
+        # STAB (Same Type Attack Bonus) if attack is made by same type of the pokemon
         if move.type in [atk_type1, atk_type2]:
             stab = 1.5
         else:
             stab = 1
 
+        # type effectiveness multipliers
+        type1_mult = def_type1.type_effectiveness(move.type)
+        if def_type2:
+            type2_mult = def_type2.type_effectiveness(move.type)
+        else:
+            type2_mult = 1
+
         # damage calculation
         damage = (((2*100*crit)/5+2)*move.power*atk/dfs)/50+2
-        damage *= stab*def_type1.type_effectiveness(move.type)
-        if def_type2:
-            damage *= def_type2.type_effectiveness(move.type)
+        damage *= stab*type1_mult*type2_mult
         if damage != 1:
             damage *= (randint(217,255)/255) # adds "random"-ness to the damage
         damage = math.floor(damage)
 
         defending.hp.final -= damage
+
+        damage, attacking, defending = after_attack(move.effect, damage, attacking, defending)
     
+    ### OLD ###
     if move.effect:
         damage, attacking, defending = effect(move.effect, damage, attacking, defending)
 

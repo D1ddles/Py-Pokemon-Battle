@@ -6,8 +6,30 @@ from models.models import Pokemon, Move
 def before_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
     "Effects for moves that happen before the attack, or instead of the attack"
 
+    # Applying status effects
+    if effect == "Confuses the target.":
+        ### STATUSES NEEDS DOING ###
+        print("UNFINISHED MOVE")
+
+    elif effect == "Paralyzes the target.":
+        ### STATUSES NEEDS DOING ###
+        print("UNFINISHED MOVE")
+
+    elif effect == "Poisons the target.":
+        ### STATUSES NEEDS DOING ###
+        print("UNFINISHED MOVE")
+
+    elif effect == "Badly poisons the target.":
+        ### STATUSES NEEDS DOING ###
+        print("UNFINISHED MOVE")
+
+    elif effect == "Causes the target to fall asleep.":
+        ### STATUSES NEEDS DOING ###
+        print("UNFINISHED MOVE")
+
     # Raising stat effects
-    if effect == "Raises the user's evasiveness by 1.":
+    elif effect == "Raises the user's evasiveness by 1.":
+        print(f"{attacking.name}'s Evasiveness rose!")
         attacking.eva.stage += 1
     
     elif effect == "Raises the user's Defense by 1.":
@@ -31,7 +53,7 @@ def before_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon)
         attacking.spd.stage += 2
 
     elif effect == "Raises the user's Special by 2.":
-        print(f"{attacking.name}'s Specuak rose greatly!")
+        print(f"{attacking.name}'s Special rose greatly!")
         attacking.spec.stage += 2
 
     elif effect == "Raises the user's Attack by 2.":
@@ -40,6 +62,7 @@ def before_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon)
 
     # Lowering stat effects
     elif effect == "Lowers the target's accuracy by 1.":
+        print(f"{attacking.name}'s Accuracy fell!")
         defending.acc.stage += 1
 
     elif effect == "Lowers the target's Speed by 1.":
@@ -49,10 +72,6 @@ def before_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon)
     elif effect == "Lowers the target's Attack by 1.":
         print(f"{defending.name}'s Attack fell!")
         defending.atk.stage -= 1
-
-    elif effect == "Lowers the target's Defense by 1.":
-        print(f"{defending.name}'s Defense fell!")
-        defending.dfs.stage -= 1
 
     elif effect == "Lowers the target's Defense by 1.":
         print(f"{defending.name}'s Defense fell!")
@@ -86,7 +105,7 @@ def before_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon)
     # Insta-kill effects
     elif effect == "Deals 65535 damage. Fails if target is faster.":
         if attacking.spd.final > defending.spd.final:
-            print(f"{attacking.name} is faster than {defending.name}!")
+            print(f"{attacking.name} is faster than {defending.name}!") # un-faithful
             dmg = 65535
         else:
             dmg = 0
@@ -97,6 +116,12 @@ def before_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon)
 def during_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
     "Effects for moves that happen during the attack"
 
+    if effect == "Target's Def halved during damage. User faints.":
+        ### NEEDS DOING ###
+        print("UNFINISHED MOVE")
+        attacking.hp = 0
+
+
     return dmg, attacking, defending
 
 
@@ -104,12 +129,18 @@ def after_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
     "Effects for moves that happen after the attack"
 
     # Healing effects
+
     if effect == "User recovers 50% of the damage dealt.":
         heal = math.floor(dmg / 2)
         print(f"{attacking.name} healed {heal} HP!")
         attacking.hp.final += heal
+    
+    elif effect == "User gains 1/2 HP inflicted. Sleeping target only.":
+        ### STATUSES NEEDS DOING ###
+        print("UNFINISHED MOVE")
 
     # Damaging-back effects
+
     elif effect == "Has 1/4 recoil.":
         ### NOT FAITHFUL IMPLEMENTATION
         recoil = math.floor(dmg / 4)
@@ -126,7 +157,64 @@ def after_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         print(f"{attacking.name} lost {lost} HP!")
         attacking.hp.final -= lost
 
+    # Applies status effects
+
+    elif effect == "30% chance to make the target flinch.":
+        ### NEEDS DOING ###
+        print("UNFINISHED MOVE")
+        
+    elif effect == "10% chance to make the target flinch.":
+        ### NEEDS DOING ###
+        if randint(1, 10) == 10:
+            pass
+        print("UNFINISHED MOVE")
+
+    elif effect == "10% chance to freeze the target.":
+        ### STATUSES NEEDS DOING ###
+        print("UNFINISHED MOVE")
+
+    elif effect == "30% chance to burn the target.":
+        ### STATUSES NEEDS DOING ###
+        print("UNFINISHED MOVE")
+
+    elif effect == "10% chance to burn the target.":
+        ### STATUSES NEEDS DOING ###
+        print("UNFINISHED MOVE")
+
+    elif effect == "10% chance to confuse the target.":
+        if randint(1,10) == 10:
+            pass
+        ### STATUSES NEEDS DOING ###
+        print("UNFINISHED MOVE")
+
+    elif effect == "10% chance to paralyze the target.":
+        ### STATUSES NEEDS DOING ###
+        print("UNFINISHED MOVE")
+        # if randint(1,10) == 10:
+
+    elif effect == "30% chance to paralyze the target.":
+        ### STATUSES NEEDS DOING ###
+        print("UNFINISHED MOVE")
+
+    elif effect == "20% chance to poison the target.":
+        ### STATUSES NEEDS DOING ###
+        print("UNFINISHED MOVE")
+
+    elif effect == "40% chance to poison the target.":
+        ### STATUSES NEEDS DOING ###
+        print("UNFINISHED MOVE")
+        # if randint(1, 10) > 6:
+
+    # + Multi-hit
+    elif effect == "Hits 2 times. Last hit has 20% chance to poison.":
+        print("Hit 2 times!")
+        dmg *= 2
+        ### STATUSES NEEDS DOING ###
+        print("UNFINISHED MOVE")
+        # if randint(1,5) == 5:
+
     # Lowering stat effects
+
     elif effect == "33% chance to lower the target's Defense by 1.":
         if randint(1,250) > 83:
             print(f"{defending.name}'s Defense fell!")
@@ -147,8 +235,8 @@ def after_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
             print(f"{defending.name}'s Special fell!")
             defending.spec.stage -= 1
     
-
     # Multi-hit effects
+
     elif effect == "Hits 2 times in one turn.":
         print("Hit 2 times!")
         dmg *= 2
@@ -167,16 +255,13 @@ def after_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         elif random == 8:
             print("Hit 5 times!")
             dmg *= 5
-
+    
     # Miscellaneous effects
+
     elif effect == "User becomes the same type as the target.":
         attacking.type1 = defending.type1
         attacking.type2 = defending.type2
         print(f"{attacking.name} became the types {defending.type1} and {defending.type2}!")
-
-    elif effect == "Scatters coins.":
-        # Coins are not + will not be implemented
-        print("Scattered coins!")
 
     elif effect == "Resets all stat changes. Removes foe's status.":
          ### STATUSES NEEDS DOING ###
@@ -198,9 +283,24 @@ def after_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         attacking.hp.final -= lost
         print("UNFINISHED MOVE")
 
+    # Moves that do not have function in trainer battles
+
+    elif effect == "No competitive use.":
+        print("Does nothing.")
+
+    elif effect == "Fails when used.":
+        print("Move failed.")
+        
+    elif effect == "Scatters coins.":
+        # Coins are not + will not be implemented
+        print("Scattered coins!")
+
+    return dmg, attacking, defending
+
 
 def lasting_effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
     "Effects that last multiple turns"
+
     if effect == "Waits 2-3 turns; deals double the damage taken.":
         ### NEEDS DOING ###
         print("UNFINISHED MOVE")
@@ -208,82 +308,39 @@ def lasting_effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon
     elif effect == "Prevents the target from moving for 2-5 turns.":
         ### NEEDS DOING ###
         print("UNFINISHED MOVE")
+        
+    elif effect == "For 0-7 turns, disables one of the target's moves.":
+        ### NEEDS DOING ###
+        print("UNFINISHED MOVE") 
 
+    elif effect == "Lasts 3-4 turns. Confuses the user afterwards.":
+        ### NEEDS DOING ###
+        print("UNFINISHED MOVE")
 
-### OLD ###
+    # Constant attack
+    elif effect == "Lasts forever. Raises user's Attack by 1 when hit.":
+        ### NEEDS DOING ###
+        print("UNFINISHED MOVE")
+
+    return dmg, attacking, defending
+
+### UNCATEGORISED MOVES - kept for effect checking ###
 # Executes effect
 def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
     """
     Executes the effect of a move
     """
 
-    if effect == "10% chance to make the target flinch.":
+    if effect == "If hit by Normal/Fighting move, deals 2x damage.":
         ### NEEDS DOING ###
-        if randint(1, 10) == 10:
-            pass
-        print("UNFINISHED MOVE")
-
-    elif effect == "10% chance to freeze the target.":
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-
-    elif effect == "30% chance to paralyze the target.":
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-    
-    elif effect == "Confuses the target.":
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-
-    elif effect == "10% chance to confuse the target.":
-        if randint(1,10) == 10:
-            pass
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-
-    elif effect == "If hit by Normal/Fighting move, deals 2x damage.":
-        ### NEEDS DOING ###
-        # requires last move's damage
+        # requires last move's damage + type
         print("UNFINISHED MOVE")
 
     elif effect == "Digs underground turn 1, strikes turn 2.":
         ### NEEDS DOING ###
         print("UNFINISHED MOVE")
     
-    elif effect == "For 0-7 turns, disables one of the target's moves.":
-        ### NEEDS DOING ###
-        print("UNFINISHED MOVE")
-
-    elif effect == "User gains 1/2 HP inflicted. Sleeping target only.":
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-
-    elif effect == "10% chance to burn the target.":
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-    
-    elif effect == "Target's Def halved during damage. User faints.":
-        ### NEEDS DOING ###
-        print("UNFINISHED MOVE")
-        attacking.hp = 0
-
-    elif effect == "30% chance to burn the target.":
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-
-    elif effect == "Prevents the target from moving for 2-5 turns.":
-        ### NEEDS DOING ###
-        print("UNFINISHED MOVE")
-
     elif effect == "Flies up on first turn, then strikes the next turn.":
-        ### NEEDS DOING ###
-        print("UNFINISHED MOVE")
-    
-    elif effect == "Paralyzes the target.":
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-
-    elif effect == "30% chance to make the target flinch.":
         ### NEEDS DOING ###
         print("UNFINISHED MOVE")
 
@@ -291,18 +348,6 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         ### NEEDS DOING ###
         print("UNFINISHED MOVE")
 
-    elif effect == "10% chance to make the target flinch.":
-        ### NEEDS DOING ###
-        print("UNFINISHED MOVE")
-        
-    elif effect == "Causes the target to fall asleep.":
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-
-    elif effect == "10% chance to freeze the target.":
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-    
     elif effect == "1/8 of target's HP is restored to user every turn.":
         ### NEEDS DOING ###
         print("UNFINISHED MOVE")
@@ -328,23 +373,7 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         ### NEEDS DOING ###
         print("UNFINISHED MOVE")
 
-    elif effect == "Lasts 3-4 turns. Confuses the user afterwards.":
-        ### NEEDS DOING ###
-        print("UNFINISHED MOVE")
-    
-    elif effect == "Poisons the target.":
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-
-    elif effect == "20% chance to poison the target.":
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-    
     elif effect == "Usually goes first.":
-        ### NEEDS DOING ###
-        print("UNFINISHED MOVE")
-
-    elif effect == "Lasts forever. Raises user's Attack by 1 when hit.":
         ### NEEDS DOING ###
         print("UNFINISHED MOVE")
 
@@ -359,19 +388,6 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
     elif effect == "User sleeps 2 turns and restores HP and status.":
         ### STATUSES NEEDS DOING ###
         print("UNFINISHED MOVE")
-
-    elif effect == "No competitive use.":
-        print("Does nothing.")
-    
-    elif effect == "Target's Def halved during damage. User faints.":
-        ### NEEDS DOING ###
-        print("UNFINISHED MOVE")
-        attacking.hp.final = 0
-
-    elif effect == "40% chance to poison the target.":
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-        # if randint(1, 10) > 6:
     
     elif effect == "Causes the target to become confused.":
         ### STATUSES NEEDS DOING ###
@@ -381,35 +397,8 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         ### NEEDS DOING ###
         print("UNFINISHED MOVE")
 
-    elif effect == "Fails when used.":
-        print("Move failed.")
-
-    elif effect == "Lasts 3-4 turns. Confuses the user afterwards.":
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-
-    elif effect == "10% chance to paralyze the target.":
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-        # if randint(1,10) == 10:
-
-    elif effect == "Badly poisons the target.":
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-
     elif effect == "Copies target's stats, moves, types, and species.":
         ### NEEDS DOING ###
         print("UNFINISHED MOVE")
-
-    elif effect == "Hits 2 times. Last hit has 20% chance to poison.":
-        print("Hit 2 times!")
-        dmg *= 2
-        ### STATUSES NEEDS DOING ###
-        print("UNFINISHED MOVE")
-        # if randint(1,5) == 5:
-
-    else:
-        # checking
-        print("MISSED EFFECT")
 
     return dmg, attacking, defending

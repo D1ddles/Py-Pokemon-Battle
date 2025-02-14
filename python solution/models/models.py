@@ -95,27 +95,52 @@ class Stat:
     base: int # base stat value
     real: int  # real stat value based on level (100)
     final: int  # final stat value after stage
-    stage: int = 0 # stage increased/decreased by effects
+    _stage: int = 0 # stage increased/decreased by effects
+
+    @property
+    def stage(self):
+        return self._stage
+
+    @stage.setter
+    def stage(self, value):
+        self._stage = value
+        self.set_final()
     
     def set_final(self):
         "Sets the final value based on the stage"
-        if self.stage == -6:
-            self.real = self.base * 0.25
-        elif self.stage == -5:
-            self.real = self.base * 0.28
-        elif self.stage == -4:
-            self.real = self.base * 0.33
-        elif self.stage == -3:
-            self.real = self.base * 0.4
-        elif self.stage == -2:
-            self.real = self.base * 0.5
-        elif self.stage == -1:
-            self.real = self.base * 0.66
-        elif self.stage == 0:
-            self.real = self.base * 1
-        elif self.stage > 0:
-            mult = self.stage * 0.5 + 1
-            self.real = self.base * mult
+
+        # Checks stage is not over/under cap
+        if self._stage < -6:
+            print("Nothing happened!")
+            self._stage = -6
+        elif self._stage > 6:
+            print("Nothing happened!")
+            self._stage = 6
+
+        # Sets final value
+        if self._stage == -6:
+            self.final = self.real * 0.25
+        elif self._stage == -5:
+            self.final = self.real * 0.28
+        elif self._stage == -4:
+            self.final = self.real * 0.33
+        elif self._stage == -3:
+            self.final = self.real * 0.4
+        elif self._stage == -2:
+            self.final = self.real * 0.5
+        elif self._stage == -1:
+            self.final = self.real * 0.66
+        elif self._stage == 0:
+            self.final = self.real * 1
+        elif self._stage > 0:
+            mult = self._stage * 0.5 + 1
+            self.final = self.real * mult
+        
+        # Checks final is not over/under cap
+        if self.final < 1:
+            self.final = 1
+        elif self.final > 999:
+            self.final = 999
 
     def __str__(self):
         return self.real
@@ -135,6 +160,7 @@ class Pokemon:
     spec: Stat
     acc: Stat = Stat(100, 100, 100)
     eva: Stat = Stat(100, 100, 100)
+    condition: str
     
     def __str__(self):
         return self.name

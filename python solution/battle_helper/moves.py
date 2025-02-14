@@ -56,6 +56,7 @@ def get_moves() -> dict:
 
     return moves_dict
 
+
 def moves_select(pokemon: Pokemon, moves_dict: dict) -> Pokemon:
     """
     Lets the user input the name of moves to create their pokemon's move list
@@ -63,9 +64,7 @@ def moves_select(pokemon: Pokemon, moves_dict: dict) -> Pokemon:
     # Create empty move list for 4 moves
     movelist = []
 
-    move = None
-
-    while not move:
+    while len(movelist) != 4:
         print(f"Select a move to give to {pokemon}: ")
         selection = input()
 
@@ -83,8 +82,8 @@ def moves_select(pokemon: Pokemon, moves_dict: dict) -> Pokemon:
         else:
             print(f"You selected {move}!")
     
-    movelist.append(move)
-
+        movelist.append(move)
+        
     pokemon.moves = movelist
 
     return pokemon
