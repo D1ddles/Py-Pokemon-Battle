@@ -3,22 +3,27 @@ from random import randint
 
 from models.models import Pokemon, Move
 
-from .effects import effect
+from .effects import effect, before_attack, during_attack, after_attack
 
 # Battle functions
 def damage_calc(move: Move, attacking: Pokemon, defending: Pokemon):
     damage = 0
-    
-    if move.power:
 
+    if move.accuracy:
         # Accuracy check
         accuracy = (move.accuracy*2.55) * attacking.acc.final * defending.eva.final
+        if accuracy > 255:
+            accuracy = 255
 
-        if randint(0,255) < accuracy:
+        if randint(1,256) < accuracy:
             pass  
         else:
             print("Attack missed!")
             return 0, attacking, defending
+        
+    damage, attacking, defending = before_attack(move.effect, damage, attacking, defending)
+
+    if move.power:
 
         # calculating damage multipliers
         if move.category == "Special":
@@ -38,7 +43,9 @@ def damage_calc(move: Move, attacking: Pokemon, defending: Pokemon):
 
         ### Critical hits use the attacker and defender's original stats with no modifications
 
-        # Random crits
+        # Random crits7
+        crit = 1
+
         if move.effect == "High critical hit ratio.":
             if randint(0,255) < (defending.spd.base * 100 / 64):
                 crit = 2
@@ -54,8 +61,6 @@ def damage_calc(move: Move, attacking: Pokemon, defending: Pokemon):
             if randint(0,255) < (defending.spd.base * 100 / 512):
                 crit = 2
                 print("Critical hit!")
-            else:
-                crit = 1
 
         # STAB (Same Type Attack Bonus) if attack is made by type of the pokemon
         if move.type in [atk_type1, atk_type2]:
