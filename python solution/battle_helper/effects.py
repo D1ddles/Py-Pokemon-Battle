@@ -64,7 +64,7 @@ def before_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon)
     # Lowering stat effects
     elif effect == "Lowers the target's accuracy by 1.":
         print(f"{attacking.name}'s Accuracy fell!")
-        defending.acc.stage += 1
+        defending.acc.stage -= 1
 
     elif effect == "Lowers the target's Speed by 1.":
         print(f"{defending.name}'s Speed fell!")

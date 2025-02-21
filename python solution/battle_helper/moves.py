@@ -69,10 +69,8 @@ def moves_select(pokemon: Pokemon) -> Pokemon:
         selection = input()
 
         try:
-            selection = selection.capitalize()
+            selection = selection.title()
             # Selects Move object from dictionary
-            print(selection)
-            print(moves_dict["Pay Day"])
             move = moves_dict[selection]
 
             movelist.append(move)

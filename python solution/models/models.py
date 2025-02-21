@@ -1,6 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
+import math
 import pickle
 from typing import List
 
@@ -135,6 +136,8 @@ class Stat:
         elif self._stage > 0:
             mult = self._stage * 0.5 + 1
             self.final = self.real * mult
+
+        self.final = math.floor(self.final)
         
         # Checks final is not over/under cap
         if self.final < 1:
@@ -181,6 +184,7 @@ class Move:
     def __str__(self):
         return self.name
     
+
 @dataclass
 class Player:
 

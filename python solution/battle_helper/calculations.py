@@ -28,14 +28,12 @@ def damage_calc(move: Move, attacking: Pokemon, defending: Pokemon):
 
         # calculating damage multipliers
         if move.category == "Special":
-            atk = attacking.atk.final
-            dfs = defending.dfs.final
-        else:
             atk = attacking.spec.final
             dfs = defending.spec.final
+        else:
+            atk = attacking.atk.final
+            dfs = defending.dfs.final
 
-        print(f"{atk=}, {dfs=}")
-        
         # setting attack types
         atk_type1 = attacking.type1
         atk_type2 = attacking.type2
@@ -44,23 +42,29 @@ def damage_calc(move: Move, attacking: Pokemon, defending: Pokemon):
         def_type1 = defending.type1
         def_type2 = defending.type2
 
-        ### Critical hits use the attacker and defender's original stats with no modifications
+        
 
-        # Random crits
+        # Critical hits use the attacker and defender's original stats with no modifications
         crit = 1
         if move.effect == "High critical hit ratio.":
-            if randint(0,255) < (defending.spd.base * 100 / 64):
+            if randint(0,255) < min(8 * defending.spd.base / 2, 255):
+                atk = attacking.atk.real
+                dfs = defending.dfs.real
                 crit = 2
                 print("Critical hit!")
 
         elif move.effect == "Quarters the user's chance for a critical hit.":
-            # Bugged move in Gen 1
-            if randint(0,255) < (defending.spd.base * 100 / 2048):
+            # Bugged effect in Gen 1
+            if randint(0,255) < (defending.spd.base / 8):
+                atk = attacking.atk.real
+                dfs = defending.dfs.real
                 crit = 2
                 print("Critical hit!")
 
         else:
-            if randint(0,255) < (defending.spd.base * 100 / 512):
+            if randint(0,255) < (defending.spd.base / 2):
+                atk = attacking.atk.real
+                dfs = defending.dfs.real
                 crit = 2
                 print("Critical hit!")
 
