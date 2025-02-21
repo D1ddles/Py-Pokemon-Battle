@@ -143,7 +143,7 @@ class Stat:
             self.final = 999
 
     def __str__(self):
-        return self.real
+        return str(self.final)
 
 
 @dataclass
@@ -184,5 +184,17 @@ class Move:
 @dataclass
 class Player:
 
+    name: str
     pokemon: list[Pokemon]
-    selected_poke: Pokemon
+
+    def __post_init__(self):
+        self.selected_poke = self.pokemon[0]
+
+    def __str__(self):
+        return self.name
+    
+    def is_alive(self):
+        "Checks if all player's pokemon are alive"
+        for poke in self.pokemon:
+            if poke.hp.final > 0:
+                return True

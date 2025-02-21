@@ -1,25 +1,12 @@
-from battle_helper.pokemon import pokemon_dict, pokemon_select
-from battle_helper.moves import moves_dict, moves_select
 from battle_helper.calculations import damage_calc
+from battle_helper.player_setup import setup
 
-def setup():
-    "Allows 2 players to select pokemon and their moves"
-    player1 = pokemon_select(pokemon_dict)
-    player2 = pokemon_select(pokemon_dict)
-
-    for pokemon in player1.pokemon:
-        pokemon = moves_select(pokemon, moves_dict)
-        
-    for pokemon in player2.pokemon:
-        pokemon = moves_select(pokemon, moves_dict)
-
-    return player1, player2
 
 def attack_select(pokemon):
     "Displays a player's pokemon's available moves, allows them to select one"
     while True:
 
-        print(f"Player 1 {pokemon.name}'s moves: ")
+        print(f"{pokemon.name}'s moves: ")
         for move in pokemon.moves:
             print(move)
 
@@ -31,41 +18,41 @@ def attack_select(pokemon):
         
         print("Must select an available move")
 
-def battle(player1, player2):
+def battle(attacking_poke, defending_poke):
+    
+    print(f"{attacking_poke.name} {attacking_poke.name}'s health: {attacking_poke.hp.final}")
+    print(f"{defending_poke.name} {defending_poke.name}'s health: {defending_poke.hp.final}")
 
-    print(f"Player 1 {player1.name}'s health: {player1.hp.final}")
-    print(f"Player 2 {player2.name}'s health: {player2.hp.final}")
+    move = attack_select(attacking_poke)
 
-    print("Player 1's turn!")
-    move = attack_select(player1)
+    damage, attacking_poke, defending_poke = damage_calc(move, attacking_poke, defending_poke)
+    print(f"{attacking_poke} dealt: {damage} damage!")
 
-    damage, player1, player2 = damage_calc(move, player1, player2)
-    print(f"Damage dealt: {damage}")
-
-    print(f"Player 1 {player1.name}'s health: {player1.hp.final}")
-    print(f"Player 2 {player2.name}'s health: {player2.hp.final}")
-
-    print("Player 2's turn!")
-    move = attack_select(player2)
-
-    damage, player2, player1 = damage_calc(move, player2, player1)
-    print(f"Damage dealt: {damage}")
-
-    print(f"Player 1 {player1.name}'s health: {player1.hp.final}")
-    print(f"Player 2 {player2.name}'s health: {player2.hp.final}")
+    return attacking_poke, defending_poke
 
 
 while True:
 
     player1, player2 = setup()
 
-    while player1.pokemon[0].hp.final > 0 and player2.pokemon[0].hp.final > 0:
-        battle(player1.pokemon[0], player2.pokemon[0])
+    while player1.is_alive() and player2.is_alive():
+        
+        print(f"{player1.name}'s Turn!")
+        player1.selected_poke, player2.selected_poke = battle(player1.selected_poke, player2.selected_poke)
 
-    if player1.pokemon[0].hp.final > 0:
-        print("Player 1 wins!")
+        if not player1.is_alive() or not player2.is_alive():
+            break
 
-    elif player2.pokemon[0].hp.final > 0:
-        print("Player 2 wins!")
+        print(f"{player2.name}'s Turn!")
+        player2.selected_poke, player1.selected_poke = battle(player2.selected_poke, player1.selected_poke)
+            
+        if not player1.is_alive() or not player2.is_alive():
+            break
+
+    if not player1.is_alive():
+        print(f"{player2.name} wins!")
+
+    elif not player2.is_alive():
+        print(f"{player1.name} wins!")
 
     break

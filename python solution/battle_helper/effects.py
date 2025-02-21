@@ -1,4 +1,5 @@
 import math
+import copy
 from random import choice, randint
 
 from models.models import Pokemon, Move
@@ -280,7 +281,7 @@ def after_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
 
     elif effect == "User takes 1/4 its max HP to put in a Substitute.":
         ### NEEDS DOING ###
-        lost = math.floor(attacking.hp.final / 4)
+        lost = math.floor(attacking.hp.real / 4)
         print(f"{attacking.name} puts {lost} HP into its Substitute!")
         attacking.hp.final -= lost
         print("UNFINISHED MOVE")
@@ -400,7 +401,7 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         print("UNFINISHED MOVE")
 
     elif effect == "Copies target's stats, moves, types, and species.":
-        ### NEEDS DOING ###
-        print("UNFINISHED MOVE")
+        print (f"{attacking.name} became {defending.name}!")
+        attacking = copy.deepcopy(defending)
 
     return dmg, attacking, defending

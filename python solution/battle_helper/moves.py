@@ -57,7 +57,7 @@ def get_moves() -> dict:
     return moves_dict
 
 
-def moves_select(pokemon: Pokemon, moves_dict: dict) -> Pokemon:
+def moves_select(pokemon: Pokemon) -> Pokemon:
     """
     Lets the user input the name of moves to create their pokemon's move list
     """
@@ -92,4 +92,3 @@ def moves_select(pokemon: Pokemon, moves_dict: dict) -> Pokemon:
 
 
 moves_dict = get_moves()
-

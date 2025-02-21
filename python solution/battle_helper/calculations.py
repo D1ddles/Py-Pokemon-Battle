@@ -33,6 +33,8 @@ def damage_calc(move: Move, attacking: Pokemon, defending: Pokemon):
         else:
             atk = attacking.spec.final
             dfs = defending.spec.final
+
+        print(f"{atk=}, {dfs=}")
         
         # setting attack types
         atk_type1 = attacking.type1

@@ -62,7 +62,7 @@ def get_pokemon() -> dict:
         return pokemon_dict
     
 # Selection functions
-def pokemon_select(pokemon_dict: dict) -> Player:
+def pokemon_select() -> list[Pokemon]:
     """
     Lets the user input the name of pokemon to make their party and returns 
     those pokemon objects from the pokemon dict
@@ -88,7 +88,6 @@ def pokemon_select(pokemon_dict: dict) -> Player:
         else:
             print(f"You selected: {selected_pokemon}!")
 
-    player = Player(pokemon, selected_poke=pokemon[0])
-    return player
+    return pokemon
 
 pokemon_dict = get_pokemon()
