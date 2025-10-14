@@ -20,13 +20,12 @@ def attack_select(pokemon):
 
 def battle(attacking_poke, defending_poke):
     
-    print(f"{attacking_poke.name} {attacking_poke.name}'s health: {attacking_poke.hp.final}")
-    print(f"{defending_poke.name} {defending_poke.name}'s health: {defending_poke.hp.final}")
+    print(f"{attacking_poke.name}'s health: {attacking_poke.hp.final}")
+    print(f"{defending_poke.name}'s health: {defending_poke.hp.final}")
 
     move = attack_select(attacking_poke)
 
-    damage, attacking_poke, defending_poke = damage_calc(move, attacking_poke, defending_poke)
-    print(f"{attacking_poke} dealt: {damage} damage!")
+    attacking_poke, defending_poke = damage_calc(move, attacking_poke, defending_poke)
 
     return attacking_poke, defending_poke
 

@@ -8,7 +8,7 @@ from models.models import Player, Pokemon, Stat, create_poke_types
 def save_pokemon():
     """
     Takes data from pokemon-stats.csv to create Pokemon objects for all pokemon
-    in a csv and write to a pickle file
+    in the csv and write to a pickle file
     """
     data = []
     types = create_poke_types()
@@ -48,6 +48,7 @@ def get_pokemon() -> dict:
     """
     file_path = Path("python solution/models/pokemon.pkl")
 
+    # Creates the pokemon pickle file if it does not exist
     if not file_path.exists():
         save_pokemon()
         file_path = Path("python solution/models/pokemon.pkl")
@@ -69,6 +70,8 @@ def pokemon_select() -> list[Pokemon]:
     """
     pokemon = []
 
+    pokemon_dict = get_pokemon()
+
     while len(pokemon) != 1: # Only 1 pokemon for testing for now
         print("Select a pokemon: ")
         selection = input()
@@ -89,5 +92,3 @@ def pokemon_select() -> list[Pokemon]:
             print(f"You selected: {selected_pokemon}!")
 
     return pokemon
-
-pokemon_dict = get_pokemon()

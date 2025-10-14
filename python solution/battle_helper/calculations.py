@@ -3,7 +3,7 @@ from random import randint
 
 from models.models import Pokemon, Move
 
-from .effects import effect, before_attack, during_attack, after_attack
+from .effects import effect, before_attack, after_attack
 
 # Battle functions
 def damage_calc(move: Move, attacking: Pokemon, defending: Pokemon):
@@ -88,7 +88,7 @@ def damage_calc(move: Move, attacking: Pokemon, defending: Pokemon):
             damage *= (randint(217,255)/255) # adds "random"-ness to the damage
         damage = math.floor(damage)
 
-
+    print(f"{attacking} dealt: {damage} damage!")
     defending.hp.final -= damage
 
     damage, attacking, defending = after_attack(move.effect, damage, attacking, defending)
@@ -97,4 +97,4 @@ def damage_calc(move: Move, attacking: Pokemon, defending: Pokemon):
     if move.effect:
         damage, attacking, defending = effect(move.effect, damage, attacking, defending)
 
-    return math.floor(damage), attacking, defending
+    return attacking, defending

@@ -68,10 +68,16 @@ def moves_select(pokemon: Pokemon) -> Pokemon:
         print(f"Select a move to give to {pokemon}: ")
         selection = input()
 
+        moves_dict = get_moves()
+
         try:
             selection = selection.title()
             # Selects Move object from dictionary
             move = moves_dict[selection]
+
+            if move in movelist:
+                print("This move is already selected")
+                continue # Skips to next iteration without adding duplicate
 
             movelist.append(move)
         
@@ -89,4 +95,4 @@ def moves_select(pokemon: Pokemon) -> Pokemon:
     return pokemon
 
 
-moves_dict = get_moves()
+# moves_dict = get_moves()

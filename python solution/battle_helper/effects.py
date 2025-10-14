@@ -113,17 +113,14 @@ def before_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon)
             print("Nothing happens")
             dmg = 0
 
-    return dmg, attacking, defending
+    # Miscelaneous effects
+    elif effect == "Copies target's stats, moves, types, and species.":
+        print (f"{attacking.name} became {defending.name}!")
+        attacking = copy.deepcopy(defending)
 
-
-def during_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
-    "Effects for moves that happen during the attack"
-
-    if effect == "Target's Def halved during damage. User faints.":
-        ### NEEDS DOING ###
-        print("UNFINISHED MOVE")
-        attacking.hp = 0
-
+    elif effect == "Target's Def halved during damage. User faints.":
+        defending.original_dfs = defending.dfs.final
+        defending.dfs.final = math.floor(defending.dfs.final / 2)
 
     return dmg, attacking, defending
 
@@ -298,6 +295,12 @@ def after_attack(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
         # Coins are not + will not be implemented
         print("Scattered coins!")
 
+    elif effect == "Target's Def halved during damage. User faints.":
+        defending.dfs.final = defending.original_dfs
+        del defending.original_dfs # Removes temporary attribute
+
+        attacking.hp.final = 0
+
     return dmg, attacking, defending
 
 
@@ -399,9 +402,5 @@ def effect(effect: str, dmg: int, attacking: Pokemon, defending: Pokemon):
     elif effect == "Never misses, even against Dig and Fly.":
         ### NEEDS DOING ###
         print("UNFINISHED MOVE")
-
-    elif effect == "Copies target's stats, moves, types, and species.":
-        print (f"{attacking.name} became {defending.name}!")
-        attacking = copy.deepcopy(defending)
 
     return dmg, attacking, defending

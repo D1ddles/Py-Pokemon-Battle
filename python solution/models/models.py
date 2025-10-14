@@ -1,8 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
-from pathlib import Path
 import math
-import pickle
 from typing import List
 
 from models.models_helper import get_type_relationships
@@ -18,37 +16,10 @@ def create_poke_types() -> dict:
     for name in type_names:
         types[name] = Poke_type(name=name)
 
-    for type in types.values():
-        type.set_relationships()
+    for poke_type in types.values():
+        poke_type.set_relationships()
 
     return types
-
-### maybe move ###
-def save_types():
-    """
-    Takes pokemon types dictionary and saves to a pickle file for external use
-    """
-    types = create_poke_types()
-
-    with open("python solution/models/types.pkl", "wb") as file:
-        pickle.dump(types, file)
-
-### MOVE ###
-def get_types() -> dict:
-    """
-    Reads the types pickle file getting a dictionary of "type name": "type object" for all types
-    """
-    file_path = Path("python solution/models/types.pkl")
-
-    # Creates pickle file if it does not already exist
-    if not file_path.exists():
-        save_types()
-        file_path = Path("python solution/models/types.pkl")
-
-    with file_path.open('rb') as file:
-        data = pickle.load(file)
-
-        return data
 
 
 # Models required for battle
@@ -194,11 +165,12 @@ class Player:
     def __post_init__(self):
         self.selected_poke = self.pokemon[0]
 
-    def __str__(self):
-        return self.name
-    
     def is_alive(self):
         "Checks if all player's pokemon are alive"
         for poke in self.pokemon:
             if poke.hp.final > 0:
                 return True
+        return False
+
+    def __str__(self):
+        return self.name
